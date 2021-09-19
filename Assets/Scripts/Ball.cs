@@ -11,7 +11,7 @@ public class Ball : MonoBehaviour
 {
     //Public Fields and Properties
     public BallState state = BallState.start;
-    
+    public float ballSpeed = 1; //The scalar component of the velocity
     public Color BallColor //Property to get/set color of the ball
     {
         get => _ballSprite.color;
@@ -24,7 +24,6 @@ public class Ball : MonoBehaviour
     
     //Physics
     private Vector2 _velocity; //The ball's velocity vector
-    [SerializeField] private float _ballSpeed = 1; //The scalar component of the velocity. Serialized so we can tune it in the inspector, but other places can't touch it.
     
     // Start is called before the first frame update
     private void Start()
@@ -52,13 +51,13 @@ public class Ball : MonoBehaviour
     //Move the ball using velocity
     private void MoveBall()
     {
-        transform.Translate(_velocity * _ballSpeed * Time.deltaTime); //Straightforward move here, just translating it by velocity.
+        transform.Translate(_velocity * ballSpeed * Time.deltaTime); //Straightforward move here, just translating it by velocity.
     }
 
     //Collisions!
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(GameManager.Instance.gameState == GameState.start) //If we're on the start screen, we want to change color
+        if(StartScreenManager.Instance != null) //If we're on the start screen, we want to change color
             StartScreenManager.Instance.ChangeColor();
 
         if (other.gameObject.CompareTag("Boundary")) //Bounce off boundaries
@@ -68,6 +67,23 @@ public class Ball : MonoBehaviour
                 _velocity.y *= -1;
             else
                 _velocity.x *= -1;
+        }
+
+        if (other.gameObject.CompareTag("Paddle")) //Bounce off paddle
+        {
+            _velocity.x = Random.Range(-1f, 1f);
+            _velocity.y *= -1;
+        }
+
+        if (other.gameObject.CompareTag("Brick"))
+        {
+            other.gameObject.GetComponent<Brick>().TakeHit();
+            _velocity.y *= -1;
+        }
+
+        if (other.gameObject.CompareTag("Out"))
+        {
+            GameManager.Instance.OutOfBounds();
         }
             
     }

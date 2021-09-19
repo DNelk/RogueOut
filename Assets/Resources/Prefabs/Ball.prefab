@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 6104149297989845888}
   - component: {fileID: 3822851459258700307}
   - component: {fileID: 4375809973617284456}
+  - component: {fileID: 3244821612515701071}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -129,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 1
-  _ballSpeed: 0.01
+  ballSpeed: 5
 --- !u!58 &4375809973617284456
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -146,3 +147,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!50 &3244821612515701071
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464599153644342140}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.19634955
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
