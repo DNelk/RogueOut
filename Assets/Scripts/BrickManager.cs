@@ -16,6 +16,10 @@ public class BrickManager : MonoBehaviour
     public float yOffset = 50; //How far apart to place each brick on the y axis
     public static BrickManager Instance = null; //Singleton instance
     
+    //Private Fields
+    private bool _pinkDestroyed = false;
+    private bool _blueDestroyed = false;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -62,6 +66,33 @@ public class BrickManager : MonoBehaviour
 
                 bricks[j, k] = brick;
             }
+        }
+    }
+
+    /// <summary>
+    /// Called when a brick is destroyed. Also decides when to increase speed.
+    /// </summary>
+    /// <param name="brickColor">Color of the brick destroyed</param>
+    public void BrickDestroyed(Color brickColor)
+    {
+        bricksLeft--;
+        if (totalBricks - bricksLeft == 4) //First increase
+        {
+            GameManager.Instance.paddle.ball.currentBallSpeed *= 1.5f;
+        }
+        if (totalBricks - bricksLeft == 12) //second increase
+        {
+            GameManager.Instance.paddle.ball.currentBallSpeed *= 1.5f;
+        }
+
+        if (!_blueDestroyed && brickColor == ProjectColors.Blue) //3/4 increase
+        {
+            GameManager.Instance.paddle.ball.currentBallSpeed *= 1.5f;
+        }
+        
+        if (!_pinkDestroyed && brickColor == ProjectColors.Pink) //3/4 increase
+        {
+            GameManager.Instance.paddle.ball.currentBallSpeed *= 1.5f;
         }
     }
 }

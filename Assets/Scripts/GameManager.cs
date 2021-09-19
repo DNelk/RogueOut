@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     private int _score = 0; //Current score
     private int _outs = 0; //How many outs have we had
     private int _maxOuts = 3; //How many outs do we have until we lose
-
+     
     
     // Start is called before the first frame update
     private void Start()
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     {
         if (BrickManager.Instance.bricksLeft == 0)
         {
-            //We won!
+            GameOver(true);
         }
     }
 
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     {
         if (win)
         {
-            
+            gameState = GameState.choosing;
         }
         else
         {

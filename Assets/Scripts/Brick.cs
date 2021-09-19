@@ -27,8 +27,8 @@ public class Brick : MonoBehaviour
         if (_hp <= 0)
         {
             GameManager.Instance.GetPoints(Color);
+            BrickManager.Instance.BrickDestroyed(Color);
             Destroy(gameObject);
-            BrickManager.Instance.bricksLeft--;
         }
     }
 }

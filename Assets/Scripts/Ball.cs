@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour
     //Public Fields and Properties
     public BallState state = BallState.start;
     public float ballSpeed = 1; //The scalar component of the velocity
+    public float currentBallSpeed; //Ball speed, but sped up
     public Color BallColor //Property to get/set color of the ball
     {
         get => _ballSprite.color;
@@ -33,6 +34,8 @@ public class Ball : MonoBehaviour
         
         //Initialize velocity
         _velocity = new Vector2(Random.Range(0f,1f),1);
+
+        currentBallSpeed = ballSpeed;
     }
 
     // Update is called once per frame
@@ -51,7 +54,7 @@ public class Ball : MonoBehaviour
     //Move the ball using velocity
     private void MoveBall()
     {
-        transform.Translate(_velocity * ballSpeed * Time.deltaTime); //Straightforward move here, just translating it by velocity.
+        transform.Translate(_velocity * currentBallSpeed * Time.deltaTime); //Straightforward move here, just translating it by velocity.
     }
 
     //Collisions!
