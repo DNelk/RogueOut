@@ -1,11 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//This just turns off the text when the ball is moving
-public class SpaceText : MonoBehaviour
+//This just turns off the text when it's not game over
+public class GameOverText : MonoBehaviour
 {
-    public Ball ball; //Reference to the ball
     private CanvasGroup _cg;
 
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class SpaceText : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (ball.state == BallState.start && GameManager.Instance.gameState == GameState.ingame)
+        if (GameManager.Instance.gameState == GameState.gameover)
             _cg.alpha = 1;
         else
             _cg.alpha = 0;

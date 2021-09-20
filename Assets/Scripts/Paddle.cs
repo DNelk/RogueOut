@@ -38,10 +38,15 @@ public class Paddle : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))//Left movement, a or left arrow
         {
             transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+            
+            if (ball.state == BallState.start) //Launch the ball
+                ball.transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) //Right movement, d or right arrow
         {
             transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+            if (ball.state == BallState.start) //Launch the ball
+                ball.transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
         }
 
         if (ball.state == BallState.start) //Launch the ball
@@ -49,7 +54,6 @@ public class Paddle : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 ball.state = BallState.moving;
-                ball.transform.SetParent(GameManager.Instance.transform, true);
             }
         }
             
@@ -58,7 +62,6 @@ public class Paddle : MonoBehaviour
     //Reset the ball and paddle to initial positions
     public void ResetPaddle()
     {
-        ball.transform.parent = transform;
         transform.position = _initialPaddlePos;
         ball.transform.position = _initialBallPos;
         ball.state = BallState.start;

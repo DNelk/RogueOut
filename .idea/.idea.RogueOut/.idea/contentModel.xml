@@ -6,12 +6,33 @@
     <e p="D:\Documents\Unity Projects\RogueOut" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Resources" t="Include">
+          <e p="Prefabs" t="Include">
+            <e p="Options" t="Include">
+              <e p="Bad" t="Include">
+                <e p="FasterBall.cs" t="Include" />
+                <e p="LosePoints.cs" t="Include" />
+                <e p="PurpleBricksMoreHits.cs" t="Include" />
+                <e p="SmallerPaddle.cs" t="Include" />
+              </e>
+              <e p="Good" t="Include">
+                <e p="ExplosiveBricks.cs" t="Include" />
+                <e p="FasterPaddle.cs" t="Include" />
+                <e p="PinkBricksDoubled.cs" t="Include" />
+                <e p="RemoveRow.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Ball.cs" t="Include" />
           <e p="Boundary.cs" t="Include" />
           <e p="Brick.cs" t="Include" />
           <e p="BrickManager.cs" t="Include" />
+          <e p="ChoicesDialog.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
+          <e p="GameOverText.cs" t="Include" />
+          <e p="Option.cs" t="Include" />
           <e p="Paddle.cs" t="Include" />
           <e p="ProjectColors.cs" t="Include" />
           <e p="SpaceText.cs" t="Include" />

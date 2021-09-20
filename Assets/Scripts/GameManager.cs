@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 /// <summary>
 /// This is our catch-all Game manager. It: 
 /// -Tracks game state
@@ -15,11 +17,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null; //Our singleton instance
     public TMP_Text scoreText; //Score text
     public TMP_Text outsText; //Outs text
+    public ChoicesDialog choices; //Panel for choosing upgrades/obstacles
     public Paddle paddle; //Reference to the paddle
     public int pinkPoints = 700;
     public int bluePoints = 500;
     public int purplePoints = 300;
     public int tealPoints = 100;
+    public bool losePoints = false;
     
     //Private Fields
     private int _score = 0; //Current score
@@ -40,12 +44,52 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (BrickManager.Instance.bricksLeft == 0)
+        switch (gameState) //State machine
         {
-            GameOver(true);
+            case GameState.ingame:
+                InGameUpdate();
+                break;
+            case GameState.gameover:
+                GameOverUpdate();
+                break;
+            case GameState.choosing:
+                ChoosingUpdate();
+                break;
         }
     }
 
+    //Update function when the game is happening
+    private void InGameUpdate()
+    {
+        if (BrickManager.Instance.bricksLeft == 0)
+        {
+            GameOver(true);
+            BrickManager.Instance.ResetBricks();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GameOver(true);
+            BrickManager.Instance.ResetBricks();
+        }
+            
+    }
+   
+    //Update function when the game is over
+    private void GameOverUpdate()
+    {
+        if (Input.anyKeyDown) //When any key is pressed, the game starts
+        {
+            ResetGame(true);
+        }
+    }
+
+    //Update function when choosing new rules
+    private void ChoosingUpdate()
+    {
+        
+    }
+    
     /// <summary>
     /// Add points to the score
     /// </summary>
@@ -67,6 +111,12 @@ public class GameManager : MonoBehaviour
     //Called when the ball goes out of bounds
     public void OutOfBounds()
     {
+        if (losePoints)
+        {
+            _score -= 1000;
+            scoreText.text = "Score: " + _score;
+        }
+            
         paddle.ResetPaddle(); //Reset paddle and ball position 
         _outs++;
         outsText.text = "Outs: " + _outs + "/" + _maxOuts;
@@ -89,6 +139,26 @@ public class GameManager : MonoBehaviour
             gameState = GameState.gameover;
             
         }
+
+        paddle.ball.state = BallState.gameover;
+    }
+
+    /// <summary>
+    /// Reset everything to its initial positions
+    /// </summary>
+    /// <param name="wipeScore">Is the score put back to zero</param>
+    public void ResetGame(bool wipeScore)
+    {
+        if (wipeScore)
+        {
+            SceneManager.LoadScene("MainScene");
+            return;
+        }
+        paddle.ResetPaddle();
+        paddle.ball.currentBallSpeed = paddle.ball.ballSpeed;
+        gameState = GameState.ingame;
+        _outs = 0;
+        BrickManager.Instance.GenerateBricks();
     }
 }
 
